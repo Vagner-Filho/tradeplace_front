@@ -1,14 +1,13 @@
 <script setup>
     import ProductCard from '../components/ProductCard.vue'
     import jblImage from '@/assets/momentaneo/jbl.svg';
-
     import { useRouter } from 'vue-router'
 
     const router = useRouter()
 
-    const goToNewUserPage = () => {
-    router.push('/new-user') 
-    }
+    const goToLoginPage = () => {
+    router.push('/login') 
+  }
 </script>
 
 <template>
@@ -16,10 +15,14 @@
 
     
       <a-card :bordered="false" class="login-card">
-        <a-typography-text :level="2" class="title">Faça seu login</a-typography-text>
+        <a-typography-text :level="2" class="title">Crie sua conta</a-typography-text>
 
         <div class="form-div">
             <a-form layout="vertical"> 
+                <a-form-item class="label-text" label="Nome Completo">
+                    <a-input placeholder="Insira seu Nome" />
+                </a-form-item>
+
                 <a-form-item class="label-text" label="Email">
                     <a-input placeholder="Insira seu Email" />
                 </a-form-item>
@@ -28,20 +31,25 @@
                     <a-input-password v-model:value="value" placeholder="Insira sua senha" />
                 </a-form-item>
 
+                <a-form-item class="label-text" label="Telefone">
+                    <a-input placeholder="(00) 00000-0000" />
+                </a-form-item>
+
                 <a-form-item class="login-button-form">
-                    <a-button class="login-button" type="primary">Login</a-button>
+                    <a-button class="create-button" type="primary">Criar sua conta</a-button>
                 </a-form-item>
             </a-form>
         </div> 
         <div class="create-button-div">
-            <a-typography-text :level="2" class="new-user-title">Novo aqui?</a-typography-text>
-            <a-button class="create-button" type="primary" @click="goToNewUserPage">Criar sua conta</a-button>
+            <a-typography-text :level="2" class="new-user-title">Já tem conta?</a-typography-text>
+            <a-button class="login-button" type="primary" @click="goToLoginPage">Faça Login</a-button>
         </div>
         
       </a-card>
     </div>
 
 </template>
+
 
 <style scope>
     .centered-container {

@@ -2,6 +2,7 @@
 import BrandHeader from '../components/layout/BrandHeader.vue'
 import DefaultFooter from '../components/layout/DefaultFooter.vue'
 import Login from '../views/Login.vue'
+import NewUser from '../views/NewUser.vue';
 </script>
 
 <template>
@@ -10,7 +11,8 @@ import Login from '../views/Login.vue'
     <BrandHeader />
 
     <a-layout-content>
-      <Login/>
+      <!-- <Login/>
+      <NewUser/> -->
       <RouterView />
     </a-layout-content>
 
