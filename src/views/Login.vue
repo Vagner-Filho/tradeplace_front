@@ -3,8 +3,31 @@
     import jblImage from '@/assets/momentaneo/jbl.svg';
 
     import { useRouter } from 'vue-router'
+    import axios from 'axios';
 
     const router = useRouter()
+
+    const handleLogin = async () => {
+        try {
+        // Enviar os dados para o back-end (Rails)
+        const response = await axios.post('http://localhost:3000/api/login', {
+            email: email.value,
+            senha: senha.value
+        });
+
+        if (response.data.success) {
+            // Se a resposta for positiva, direciona para a página principal ou dashboard
+            message.success('Login bem-sucedido!');
+            router.push('/');
+        } else {
+            // Se houver erro, mostra a mensagem
+            message.error('Credenciais inválidas. Tente novamente.');
+        }
+        } catch (error) {
+        console.error('Erro na requisição:', error);
+        message.error('Ocorreu um erro ao tentar fazer login.');
+        }
+    }
 
     const goToNewUserPage = () => {
     router.push('/new-user') 
@@ -29,7 +52,7 @@
                 </a-form-item>
 
                 <a-form-item class="login-button-form">
-                    <a-button class="login-button" type="primary">Login</a-button>
+                    <a-button class="login-button" type="primary" @click="handleLogin">Login</a-button>
                 </a-form-item>
             </a-form>
         </div> 
