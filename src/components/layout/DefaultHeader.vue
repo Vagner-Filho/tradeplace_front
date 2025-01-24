@@ -1,7 +1,7 @@
 <template>
     <a-layout-header class="header">
         <!-- Logo -->
-        <div class="logo">
+        <div role="button" class="logo" @click="$router.go({ path: '/', force: true })">
             <img alt="TradePlace logo" class="logo-img" src="@/assets/logo.svg" width="125" height="125" />
         </div>
 
@@ -10,7 +10,7 @@
             <a-input-search
                 placeholder="Pesquise o que precisa..."
                 class="custom-search"
-                @search="onSearch"
+                @search="handleSearch($event)"
                 >
                 <template #enterButton>
                     <a-button class="custom-button">Buscar</a-button>
@@ -30,13 +30,33 @@
 </template>
   
 <script setup>
-  import { Layout, Input, Button } from 'ant-design-vue'
-  import { useRouter } from 'vue-router'
+import { useProductStore } from '@/stores/product';
+import { storeToRefs } from 'pinia';
+import { useRoute, useRouter } from 'vue-router'
 
   const router = useRouter()
+  const route = useRoute()
+
+  const productStore = storeToRefs(useProductStore());
 
   const goToLoginPage = () => {
     router.push('/login')  // Redireciona para a página /login
+  }
+
+  let filterBackup = [];
+  function handleSearch(ev) {
+    filterBackup = productStore.productsList.value;
+    if (route.path === '/') {
+      if (!ev) {
+        productStore.productsList.value = filterBackup;
+        return
+      }
+      productStore.productsList.value = productStore.productsList.value.filter(p => p.product_name.toLowerCase().includes(ev.toLowerCase()));
+      return
+    }
+
+    productStore.productsList.value = filterBackup.filter(p => p.product_name.toLowerCase().includes(ev.toLowerCase()));
+  router.push({ path: '/', query: { fromSearch: true } })
   }
 </script>
 
@@ -59,6 +79,7 @@
     .logo {
         display: flex;
         align-items: center;
+        cursor: pointer;
     }
     
     .logo-img {

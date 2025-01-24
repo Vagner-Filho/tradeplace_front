@@ -1,42 +1,41 @@
 <script setup>
-  import { ref } from 'vue'
-  import { useRouter } from 'vue-router'
-  import axios from 'axios'
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+import axios from 'axios'
 
-  const router = useRouter()
+const router = useRouter()
 
-  const name = ref('')
-  const email = ref('')
-  const password = ref('')
-  const phone = ref('')
+const name = ref('')
+const email = ref('')
+const password = ref('')
+const phone = ref('')
 
-  const goToLoginPage = () => {
-    router.push('/login')
+const goToLoginPage = () => {
+  router.push('/login')
+}
+
+const handleSubmit = async () => {
+  try {
+    const response = await axios.post('http://127.0.0.1:3000/users', {
+      user: {
+        name: name.value,
+        email: email.value,
+        password: password.value,
+        phone: phone.value,
+        user_type: 'basic',
+      },
+    }, {
+      headers: {
+        'Content-Type': 'application/json',  // Defina o header explicitamente
+      }
+    })
+    if (response.status === 201) {
+      router.push('/login')
+    }
+  } catch (error) {
+    console.error('Erro ao criar usuário:', error.response || error)
   }
-
-  const handleSubmit = async () => {
-    try {
-        const response = await axios.post('http://127.0.0.1:3000/users', {
-            user: {
-                name: name.value,
-                email: email.value,
-                password: password.value,
-                phone: phone.value,
-                user_type: 'basic', 
-            },
-            }, {
-                headers: {
-                    'Content-Type': 'application/json',  // Defina o header explicitamente
-                }
-            })
-        
-        if (response.status === 201) {
-        router.push('/login')
-        }
-    } catch (error) {
-        console.error('Erro ao criar usuário:', error.response || error)
-    }
-    }
+}
 
 </script>
 
@@ -78,77 +77,77 @@
 </template>
 
 <style scoped>
-  .centered-container {
-    background-color: #D9D9D9;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: calc(100vh - 96px);
-  }
+.centered-container {
+  background-color: #D9D9D9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 96px);
+}
 
-  .title {
-    display: flex;
-    justify-content: center;
-    font-size: 25px;
-    color: white;
-    margin-bottom: 30px;
-  }
+.title {
+  display: flex;
+  justify-content: center;
+  font-size: 25px;
+  color: white;
+  margin-bottom: 30px;
+}
 
-  .form-div {
-    width: 80%;
-    margin: auto;
-  }
+.form-div {
+  width: 80%;
+  margin: auto;
+}
 
-  label {
-    color: white !important;
-    font-size: 15px !important;
-  }
+label {
+  color: white !important;
+  font-size: 15px !important;
+}
 
-  .login-card {
-    width: 50%;
-    margin: auto;
-    background-color: #287D9C;
-    color: white;
-    max-width: 600px;
-  }
+.login-card {
+  width: 50%;
+  margin: auto;
+  background-color: #287D9C;
+  color: white;
+  max-width: 600px;
+}
 
-  .login-button-form {
-    display: flex;
-    justify-content: center;
-    margin-top: 30px;
-  }
+.login-button-form {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+}
 
-  .login-button {
-    width: 120px;
-    background-color: #50C878;
-  }
+.login-button {
+  width: 120px;
+  background-color: #50C878;
+}
 
-  .login-button:hover {
-    background-color: #48B474 !important;
-    transform: scale(1.05);
-  }
+.login-button:hover {
+  background-color: #48B474 !important;
+  transform: scale(1.05);
+}
 
-  .new-user-title {
-    font-size: 20px;
-    color: white;
-  }
+.new-user-title {
+  font-size: 20px;
+  color: white;
+}
 
-  .create-button {
-    width: 150px;
-    background-color: #50C878;
-  }
+.create-button {
+  width: 150px;
+  background-color: #50C878;
+}
 
-  .create-button-div {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    margin-top: 45px;
-  }
+.create-button-div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-top: 45px;
+}
 
-  .create-button:hover {
-    background-color: #48B474 !important;
-    transform: scale(1.05);
-  }
+.create-button:hover {
+  background-color: #48B474 !important;
+  transform: scale(1.05);
+}
 </style>

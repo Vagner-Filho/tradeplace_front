@@ -5,6 +5,7 @@ import Login from '../views/Login.vue'
 import NewUser from '../views/NewUser.vue'
 import Product from '@/views/sales/Product.vue'
 import DefaultContentLayout from '@/layouts/DefaultContentLayout.vue'
+import ProductPage from '@/views/customer/ProductPage.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -50,6 +51,18 @@ const router = createRouter({
           path: '',
           name: 'salesProductPage',
           component: Product
+        }
+      ]
+    },
+    {
+      path: '/product',
+      name: 'productPage',
+      component: DefaultContentLayout,
+      children: [
+        {
+          path: '',
+          name: 'customerProductPage',
+          component: ProductPage
         }
       ]
     }

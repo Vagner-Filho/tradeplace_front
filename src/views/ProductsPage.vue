@@ -1,6 +1,9 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import ProductCard from '../components/ProductCard.vue';
+import { useProductStore } from '@/stores/product';
+import { storeToRefs } from 'pinia';
+import { useRouter } from 'vue-router';
 
 const products = ref([]);
 
